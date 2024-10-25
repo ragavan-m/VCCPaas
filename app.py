@@ -1,10 +1,9 @@
 import streamlit as st
 from pymongo import MongoClient
-from bson.objectid import ObjectId
-import pandas as pd
 
-# MongoDB connection
-client = MongoClient("mongodb+srv://mragavan0700:9cytmFi5OpWZOpoX@cluster0.wj2bb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+# Accessing the connection string from secrets.toml
+mongo_uri = st.secrets["mongo"]["uri"]
+client = MongoClient(mongo_uri)
 db = client['polling_system_db']
 
 # Admin Authentication
