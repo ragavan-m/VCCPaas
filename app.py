@@ -1,13 +1,14 @@
 import streamlit as st
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+import pandas as pd
 
-# Accessing the connection string from secrets.toml
-mongo_uri = st.secrets["mongo"]["uri"]
-client = MongoClient(mongo_uri)
+# MongoDB connection (replace with your actual MongoDB Atlas connection string)
+client = MongoClient("mongodb+srv://mragavan0700:9cytmFi5OpWZOpoX@cluster0.wj2bb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client['polling_system_db']
 
 # Admin Authentication
-ADMIN_PASSWORD = "admin123" 
+ADMIN_PASSWORD = "admin123"  # Set the admin password here
 
 # Initialize session state for authentication and user info
 if "authenticated" not in st.session_state:
@@ -69,6 +70,8 @@ def request_user_name():
         if name:
             st.session_state.user_name = name
             st.success(f"Welcome, {name}! You can now vote.")
+            # Redirect to voting page immediately after name submission
+            show_vote_page()  # Call the voting page directly
         else:
             st.error("Please enter your name.")
 
